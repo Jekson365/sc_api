@@ -12,7 +12,7 @@ use GraphQL\Type\Schema;
 
 require './vendor/autoload.php';
 
-header("Access-Control-Allow-Origin: http://earthstore.testpuzzle.ge:8081");
+header("Access-Control-Allow-Origin: *");
 
 header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
 
