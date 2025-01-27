@@ -50,6 +50,7 @@ class Product extends Model
             products.id as id,
             products.inStock as inStock,
             products.name as name,
+            products.id_name as id_name,
             products.description as description, 
         categories.name as catName,
             categories.id as catId,
