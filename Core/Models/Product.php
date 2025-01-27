@@ -15,6 +15,7 @@ class Product extends Model
     {
         $sql = "SELECT 
                     products.id as id, 
+                    products.id_name as id_name,
                     products.description as description, 
                     products.inStock as inStock, 
                     products.name as name, 

@@ -20,6 +20,7 @@ class ProductType extends ObjectType
             'fields' => [
                 'id' => Type::nonNull(Type::int()),
                 'name' => Type::nonNull(Type::string()),
+                'id_name'=> Type::nonNull(Type::string()),
                 'description' => Type::nonNull(Type::string()),
                 'category' => [
                     'type' => new CategoryType(),
