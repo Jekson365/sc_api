@@ -27,11 +27,11 @@ class ProductQuery extends ObjectType
                             $model = new Product();
                             if (!empty($args['id'])) {
                                 $product = $model->getById($args['id']);
-                                return $product ? [$product] : null; // Return as an array for consistency
+                                return $product ? [$product] : null;
                             } elseif (!empty($args['catName'])) {
                                 return $model->getAllByCategory($args['catName']);
                             } else {
-                                throw new \Exception("You must provide either 'id' or 'catName' as an argument.");
+                                throw new \Exception("You must provide id or catname");
                             }
                         }
                     ],

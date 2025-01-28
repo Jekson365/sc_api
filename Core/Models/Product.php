@@ -11,23 +11,10 @@ class Product extends Model
     {
         parent::__construct();
     }
-    public function getAllByCategory($catName)
+
+    public function getAllByCategory(string $catName): array
     {
-        $sql = "SELECT 
-                    products.id as id, 
-                    products.id_name as id_name,
-                    products.description as description, 
-                    products.inStock as inStock, 
-                    products.name as name, 
-                    categories.name as catName, 
-                    categories.id as catId, 
-                    products.price_id as price_id, 
-                    prices.amount as amount, 
-                    currencies.symbol as symbol 
-                FROM products 
-                LEFT JOIN categories ON categories.id = products.category_id
-                LEFT JOIN prices ON prices.id = products.price_id
-                LEFT JOIN currencies ON currencies.id = prices.currency_id";
+        $sql = $this->getBaseProductQuery();
 
         if ($catName !== 'all') {
             $sql .= " WHERE categories.name = :cat_name";
@@ -36,7 +23,7 @@ class Product extends Model
         $query = $this->db->prepare($sql);
 
         if ($catName !== 'all') {
-            $query->bindParam(":cat_name", $catName);
+            $query->bindValue(":cat_name", $catName);
         }
 
         $query->execute();
@@ -44,30 +31,37 @@ class Product extends Model
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function getById($prodId)
+    public function getById(int $prodId): ?array
     {
-        $sql = "SELECT
-            products.id as id,
-            products.inStock as inStock,
-            products.name as name,
-            products.id_name as id_name,
-            products.description as description, 
-        categories.name as catName,
-            categories.id as catId,
-            products.price_id as price_id,
-            prices.amount as amount,
-            currencies.symbol as symbol
-            FROM products 
-         
-        LEFT JOIN categories ON categories.id = products.category_id
-        LEFT JOIN prices ON prices.id = products.price_id
-        LEFT JOIN currencies ON currencies.id = prices.currency_id
-        WHERE products.id = :prod_id";
+        $sql = $this->getBaseProductQuery() . " WHERE products.id = :prod_id";
 
         $query = $this->db->prepare($sql);
-        $query->bindParam(":prod_id", $prodId);
+        $query->bindValue(":prod_id", $prodId, PDO::PARAM_INT);
         $query->execute();
 
-        return $query->fetch(PDO::FETCH_ASSOC);
+        $result = $query->fetch(PDO::FETCH_ASSOC);
+
+        return $result ?: null;
+    }
+
+    private function getBaseProductQuery(): string
+    {
+        return "
+            SELECT 
+                products.id AS id, 
+                products.id_name AS id_name,
+                products.description AS description, 
+                products.inStock AS inStock, 
+                products.name AS name, 
+                categories.name AS catName, 
+                categories.id AS catId, 
+                products.price_id AS price_id, 
+                prices.amount AS amount, 
+                currencies.symbol AS symbol 
+            FROM products 
+            LEFT JOIN categories ON categories.id = products.category_id
+            LEFT JOIN prices ON prices.id = products.price_id
+            LEFT JOIN currencies ON currencies.id = prices.currency_id
+        ";
     }
 }
