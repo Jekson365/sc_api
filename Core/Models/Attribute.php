@@ -2,10 +2,11 @@
 
 namespace Core\Models;
 
+use Core\Interfaces\AttributeInterface;
 use Core\Model;
 use PDO;
 
-class Attribute extends Model
+class Attribute extends Model implements AttributeInterface
 {
     public function __construct()
     {

@@ -2,9 +2,10 @@
 
 namespace Core\Models;
 
+use Core\Interfaces\CartInterface;
 use Core\Model;
 
-class Cart extends Model
+class Cart extends Model implements CartInterface
 {
     public function __construct()
     {

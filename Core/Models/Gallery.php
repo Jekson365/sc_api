@@ -3,10 +3,11 @@
 
 namespace Core\Models;
 
+use Core\Interfaces\GalleryInterface;
 use Core\Model;
 use PDO;
 
-class Gallery extends Model
+class Gallery extends Model implements GalleryInterface
 {
     public function getGalleryImages($productId)
     {

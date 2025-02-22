@@ -2,10 +2,11 @@
 
 namespace Core\Models;
 
+use Core\Interfaces\ProductInterface;
 use Core\Model;
 use PDO;
 
-class Product extends Model
+class Product extends Model implements ProductInterface
 {
     public function __construct()
     {

@@ -2,11 +2,14 @@
 
 namespace Core\Models;
 
+use Core\Interfaces\ItemInterface;
 use Core\Model;
 use PDO;
 
-class Item extends Model {
-    public function getByAttrId($attrId) {
+class Item extends Model implements ItemInterface
+{
+    public function getByAttrId($attrId)
+    {
         $sql = "SELECT * FROM items WHERE attribute_id = :attributeId";
 
         $stmt = $this->db->prepare($sql);

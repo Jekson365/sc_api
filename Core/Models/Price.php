@@ -2,10 +2,11 @@
 
 namespace Core\Models;
 
+use Core\Interfaces\PriceInterface;
 use Core\Model;
 use PDO;
 
-class Price extends Model
+class Price extends Model implements PriceInterface
 {
     public function getPriceId($id)
     {

@@ -2,10 +2,11 @@
 
 namespace Core\Models;
 
+use Core\Interfaces\CategoryInterface;
 use Core\Model;
 use PDO;
 
-class Category extends Model
+class Category extends Model implements CategoryInterface
 {
     public function getCategoryById($id)
     {
